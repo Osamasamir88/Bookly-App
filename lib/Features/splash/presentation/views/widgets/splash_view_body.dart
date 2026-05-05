@@ -1,6 +1,9 @@
 import 'package:bookly/Core/utils/app_assets.dart';
+import 'package:bookly/Features/home/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/state_manager.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -11,28 +14,15 @@ class SplashViewBody extends StatefulWidget {
 
 class _SplashViewBodyState extends State<SplashViewBody>
     with SingleTickerProviderStateMixin {
-
   late AnimationController animationController;
   late Animation<Offset> slidingAnimation;
-
-  void initSlidingAnimation() {
-    animationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 1),
-    );
-
-    slidingAnimation = Tween<Offset>(
-      begin: Offset(0, 8),
-      end: Offset.zero,
-    ).animate(animationController);
-
-    animationController.forward();
-  }
 
   @override
   void initState() {
     super.initState();
     initSlidingAnimation();
+
+    navigateToHome();
   }
 
   @override
@@ -59,5 +49,29 @@ class _SplashViewBodyState extends State<SplashViewBody>
         ),
       ],
     );
+  }
+
+  void initSlidingAnimation() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+
+    slidingAnimation = Tween<Offset>(
+      begin: Offset(0, 8),
+      end: Offset.zero,
+    ).animate(animationController);
+
+    animationController.forward();
+  }
+
+  void navigateToHome() {
+    Future.delayed(Duration(seconds: 3), () {
+      Get.to(
+        () => HomeView(),
+        transition: Transition.rightToLeft,
+        duration: Duration(milliseconds: 450),
+      );
+    });
   }
 }
