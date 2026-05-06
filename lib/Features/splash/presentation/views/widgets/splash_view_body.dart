@@ -69,8 +69,8 @@ class _SplashViewBodyState extends State<SplashViewBody>
     Future.delayed(Duration(seconds: 3), () {
       Get.offAll(
         () => HomeView(),
-        transition: Transition.rightToLeft,
-        duration: Duration(milliseconds: 450),
+        transition: Transition.cupertino,
+        duration: Duration(milliseconds: 2000),
       );
     });
   }
