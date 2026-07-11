@@ -1,5 +1,5 @@
 import 'package:bookly/Core/styles/app_text_styles.dart';
-import 'package:bookly/Features/home/presentation/views/widgets/best_seller_list_view_item.dart';
+import 'package:bookly/Features/home/presentation/views/widgets/book_list_view_item.dart';
 import 'package:bookly/Features/home/presentation/views/widgets/custom_app_bar.dart';
 import 'package:bookly/Features/home/presentation/views/widgets/books_list_view.dart';
 import 'package:flutter/material.dart';
@@ -25,14 +25,14 @@ class HomeViewBody extends StatelessWidget {
             ),
           ),
         ),
-        
+
         // best seller list view
         SliverList.builder(
           itemCount: 10,
-          itemBuilder: (context, index) => BestSellerListViewItem(),
+          itemBuilder: (context, index) => BookListViewItem(),
         ),
 
-        SliverToBoxAdapter(child: SizedBox(height: 30,)),
+        SliverToBoxAdapter(child: SizedBox(height: 30)),
       ],
     );
   }
