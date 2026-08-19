@@ -14,7 +14,7 @@ class HomeRepoImpl implements HomeRepo {
     try {
       var data = await apiService.get(
         endpoint:
-            'https://www.googleapis.com/books/v1/volumes?q=sports&key=AIzaSyBp6fM4i8456OeDg4Uai8piFwafT-3Zv5M',
+            'volumes?q=flutter&key=AIzaSyBp6fM4i8456OeDg4Uai8piFwafT-3Zv5M',
       );
 
       List<BookModel> books = [];
