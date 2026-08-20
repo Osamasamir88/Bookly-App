@@ -9,7 +9,7 @@ class SearchResultListView extends StatelessWidget {
     return ListView.builder(
       padding: EdgeInsets.symmetric(vertical: 5),
       itemCount: 10, // رقم افتراضي مؤقتاً لحد ما نربط الـ API
-      itemBuilder: (context, index) => BookListViewItem(),
+      itemBuilder: (context, index) => SizedBox() // BookListViewItem(),
     );
   }
 }
