@@ -11,7 +11,7 @@ class BookListViewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(AppRoutes.bookDetailsView),
+      onTap: () => context.push(AppRoutes.bookDetailsView,extra: book),
       child: Container(
         height: MediaQuery.of(context).size.height * .18,
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),

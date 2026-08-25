@@ -1,28 +1,36 @@
 import 'package:bookly/Core/styles/app_text_styles.dart';
-import 'package:bookly/Core/utils/app_assets.dart';
+import 'package:bookly/Features/home/data/models/book_model/book_model.dart';
 import 'package:bookly/Features/home/presentation/views/widgets/book_price_preview.dart';
+import 'package:bookly/Features/home/presentation/views/widgets/book_price_rate.dart';
 import 'package:bookly/Features/home/presentation/views/widgets/book_rating.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class BookDetailsSection extends StatelessWidget {
-  const BookDetailsSection({super.key});
-
+  const BookDetailsSection({super.key, required this.book});
+  final BookModel book;
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         // book image
-        Image.asset(
-          AppAssets.booktest,
-          width: MediaQuery.of(context).size.width * 0.5,
-          height: MediaQuery.of(context).size.height * 0.3,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: CachedNetworkImage(
+            imageUrl: book.volumeInfo.imageLinks!.thumbnail,
+            fit: BoxFit.fill,
+            width: MediaQuery.of(context).size.width * 0.5,
+            height: MediaQuery.of(context).size.height * 0.3,
+          ),
         ),
 
         SizedBox(height: 46),
 
         // book titile
         Text(
-          'The Jungle Book',
+          book.volumeInfo.title ?? '',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles.titleOfBook.copyWith(fontSize: 30),
         ),
 
@@ -30,18 +38,27 @@ class BookDetailsSection extends StatelessWidget {
 
         // autor of book
         Text(
-          'Rudyard Kipling',
+          book.volumeInfo.authors != null
+              ? book.volumeInfo.authors![0]
+              : 'No author available',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles.autor.copyWith(fontSize: 18),
         ),
 
         SizedBox(height: 10),
 
-        BookRating(),
+        BookRating(
+          rate: book.volumeInfo.averageRating != null ?  book.volumeInfo.averageRating.toString() : getRandomDouble(1, 5).toStringAsFixed(1),
+          rateCount: book.volumeInfo.ratingsCount != null ? book.volumeInfo.ratingsCount!.toInt() : getRandomDouble(10000, 30000).toInt(),
+        ),
 
         SizedBox(height: 39),
 
-        BookPriceAndPreview(),
+        BookPriceAndPreview(url: book.volumeInfo.previewLink,),
       ],
     );
   }
 }
+
+

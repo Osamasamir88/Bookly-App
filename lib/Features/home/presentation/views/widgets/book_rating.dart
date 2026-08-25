@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class BookRating extends StatelessWidget {
-  const BookRating({
-    super.key,
-  });
-
+  const BookRating({super.key, required this.rate, required this.rateCount});
+  final String? rate ;
+  final int rateCount;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -15,9 +14,9 @@ class BookRating extends StatelessWidget {
       children: [
         SvgPicture.asset(AppAssets.star),
         SizedBox(width: 5),
-        Text('4.8', style: AppTextStyles.rateOfBook),
+        Text(rate!, style: AppTextStyles.rateOfBook),
         SizedBox(width: 5),
-        Text('(2390)', style: AppTextStyles.countOfRate),
+        Text('($rateCount)', style: AppTextStyles.countOfRate),
       ],
     );
   }

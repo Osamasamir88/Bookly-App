@@ -1,9 +1,10 @@
 import 'package:bookly/Core/styles/app_text_styles.dart';
+import 'package:bookly/Core/utils/launch_custom_url.dart';
 import 'package:flutter/material.dart';
 
 class BookPriceAndPreview extends StatelessWidget {
-  const BookPriceAndPreview({super.key});
-
+  const BookPriceAndPreview({super.key, required this.url});
+  final String? url;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -43,7 +44,9 @@ class BookPriceAndPreview extends StatelessWidget {
           ),
           Expanded(
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                launchCustomUrl(context, url);
+              },
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(15),
                 topRight: Radius.circular(15),
