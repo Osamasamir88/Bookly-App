@@ -15,7 +15,7 @@ class ListViewItem extends StatelessWidget {
         child: CachedNetworkImage(
           imageUrl: image,
           fit: BoxFit.cover,
-          width: MediaQuery.of(context).size.width * .38,
+          width: MediaQuery.of(context).size.width * .38,  //  هنخليه بيتغير هو الارتفاع علشان لو استخدمناه في مكان تاني بس نخليخيه قيمته الافتراضيه هي دي 
           height: MediaQuery.of(context).size.height * .26,
           // يعرض أثناء التحميل
           placeholder: (context, url) =>
@@ -29,5 +29,5 @@ class ListViewItem extends StatelessWidget {
         ),
       ),
     );
-  }             
+  }                   
 }
