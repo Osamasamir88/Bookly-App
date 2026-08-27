@@ -17,14 +17,18 @@ class SimilarBooksListView extends StatelessWidget {
             ? ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: state.books.length,
-                itemBuilder: (context, index) => InkWell(
-                  onTap: () => context.push(AppRoutes.bookDetailsView,extra: state.books[index]),
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () => context.push(
+                    AppRoutes.bookDetailsView,
+                    extra: state.books[index],
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: CachedNetworkImage(
-                        imageUrl:state.books[index].volumeInfo.imageLinks!.thumbnail,
+                        imageUrl:
+                            state.books[index].volumeInfo.imageLinks!.thumbnail,
                         width: 80,
                         height: 122,
                       ),
@@ -34,17 +38,20 @@ class SimilarBooksListView extends StatelessWidget {
               )
             : state is SimilarBooksFailure
             ? Column(
-              children: [
-                CustomErrorWidget(errMessage: state.errMessage),
-                SizedBox(height: 16,),
-                ElevatedButton(onPressed: () {
-                  var cubit = BlocProvider.of<SimilarBooksCubit>(context);
-                  if (cubit.lastCategoryQuery != null) {
-                    cubit.featchSimilarBooks(cubit.lastCategoryQuery!);
-                  }
-                }, child: Text('Retry')),
-              ],
-            )
+                children: [
+                  CustomErrorWidget(errMessage: state.errMessage),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      var cubit = BlocProvider.of<SimilarBooksCubit>(context);
+                      if (cubit.lastCategoryQuery != null) {
+                        cubit.featchSimilarBooks(cubit.lastCategoryQuery!);
+                      }
+                    },
+                    child: Text('Retry'),
+                  ),
+                ],
+              )
             : Center(child: CircularProgressIndicator());
       },
     );

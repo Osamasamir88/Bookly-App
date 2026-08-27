@@ -43,18 +43,32 @@ class HomeViewBody extends StatelessWidget {
               return state is NewestBooksSuccess
                   ? SliverList.builder(
                       itemCount: state.books.length,
-                      itemBuilder: (context, index) => BookListViewItem(book: state.books[index],),
+                      itemBuilder: (context, index) =>
+                          BookListViewItem(book: state.books[index]),
                     )
                   : state is NewestBooksFailure
                   ? SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 30),
-                      child: CustomErrorWidget(
-                        errMessage: state.errMessage,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Column(
+                          children: [
+                            CustomErrorWidget(errMessage: state.errMessage),
+                            SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () {
+                                BlocProvider.of<NewestBooksCubit>(
+                                  context,
+                                ).fetchNewestBooks();
+                              },
+                              child: Text('Retry'),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                  : SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
+                    )
+                  : SliverToBoxAdapter(
+                      child: Center(child: CircularProgressIndicator()),
+                    );
             },
           ),
 
