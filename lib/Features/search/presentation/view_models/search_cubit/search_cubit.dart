@@ -8,8 +8,10 @@ part 'search_state.dart';
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit(this.searchRepo) : super(SearchInitial());
   final SearchRepo searchRepo;
+  String? lastSearchQuery;
 
   featchBooksBySearch(String category) async {
+    lastSearchQuery = category;   // دي علشان لما نيجي نعمل ريفريش يبقي معانا اخر كلمه اليوزر سرش عليها
     emit(SearchLoading());
     var result = await searchRepo.fetchSearchBooks(category);
     result.fold(
