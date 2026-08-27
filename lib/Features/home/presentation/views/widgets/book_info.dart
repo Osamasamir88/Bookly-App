@@ -26,8 +26,9 @@ class BookInfo extends StatelessWidget {
           ), // book autor
           SizedBox(height: 8),
           BookPriceAndRate(
-            rate: book.volumeInfo.averageRating ?? getRandomDouble(1, 5),
-            count: book.volumeInfo.ratingsCount ?? getRandomDouble(1000, 30000).toInt(),
+            rate: book.volumeInfo.customRating,
+            ratingCount: book.volumeInfo.customRatingCount,
+            price: book.volumeInfo.customPrice.toStringAsFixed(2),
           ),
         ],
       ),

@@ -3,8 +3,9 @@ import 'package:bookly/Core/utils/launch_custom_url.dart';
 import 'package:flutter/material.dart';
 
 class BookPriceAndPreview extends StatelessWidget {
-  const BookPriceAndPreview({super.key, required this.url});
+  const BookPriceAndPreview({super.key, required this.url, required this.price});
   final String? url;
+  final String price;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -32,7 +33,7 @@ class BookPriceAndPreview extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    '19.99€',
+                    '$price €',
                     style: AppTextStyles.priceOfBook.copyWith(
                       fontSize: 18,
                       color: Colors.black,

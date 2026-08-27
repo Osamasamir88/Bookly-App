@@ -29,5 +29,5 @@ class ListViewItem extends StatelessWidget {
         ),
       ),
     );
-  }
+  }             
 }

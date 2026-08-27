@@ -1,7 +1,6 @@
 import 'package:bookly/Core/styles/app_text_styles.dart';
 import 'package:bookly/Features/home/data/models/book_model/book_model.dart';
 import 'package:bookly/Features/home/presentation/views/widgets/book_price_preview.dart';
-import 'package:bookly/Features/home/presentation/views/widgets/book_price_rate.dart';
 import 'package:bookly/Features/home/presentation/views/widgets/book_rating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -49,16 +48,17 @@ class BookDetailsSection extends StatelessWidget {
         SizedBox(height: 10),
 
         BookRating(
-          rate: book.volumeInfo.averageRating != null ?  book.volumeInfo.averageRating.toString() : getRandomDouble(1, 5).toStringAsFixed(1),
-          rateCount: book.volumeInfo.ratingsCount != null ? book.volumeInfo.ratingsCount!.toInt() : getRandomDouble(10000, 30000).toInt(),
+          rate: book.volumeInfo.customRating.toStringAsFixed(1),
+          rateCount: book.volumeInfo.customRatingCount,
         ),
 
         SizedBox(height: 39),
 
-        BookPriceAndPreview(url: book.volumeInfo.previewLink,),
+        BookPriceAndPreview(
+          url: book.volumeInfo.previewLink,
+          price: book.volumeInfo.customPrice.toStringAsFixed(2),
+        ),
       ],
     );
   }
 }
-
-
