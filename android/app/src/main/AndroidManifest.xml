@@ -12,7 +12,7 @@
     </queries>
     
     <application
-        android:label="bookly"
+        android:label="Bookly"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
