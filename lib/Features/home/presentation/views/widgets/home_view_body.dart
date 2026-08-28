@@ -15,9 +15,14 @@ class HomeViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        // تحديث كل البيانات في الشاشة دفعة واحدة
-        await BlocProvider.of<FeaturedBooksCubit>(context).fetchFeaturedBooks();
-        await BlocProvider.of<NewestBooksCubit>(context).fetchNewestBooks();
+        // ناخد الـ cubits قبل الـ await عشان نتفادي استخدام context بعد async gap
+        final featuredCubit = BlocProvider.of<FeaturedBooksCubit>(context);
+        final newestCubit = BlocProvider.of<NewestBooksCubit>(context);
+        // تحديث كل البيانات في الشاشة دفعة واحدة وبشكل متوازي
+        await Future.wait<void>([
+          featuredCubit.fetchFeaturedBooks(),
+          newestCubit.fetchNewestBooks(),
+        ]);
       },
       child: CustomScrollView(
         slivers: [

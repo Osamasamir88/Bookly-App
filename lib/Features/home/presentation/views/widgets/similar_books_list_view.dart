@@ -26,12 +26,26 @@ class SimilarBooksListView extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 10),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            state.books[index].volumeInfo.imageLinks!.thumbnail,
-                        width: 80,
-                        height: 122,
-                      ),
+                      child: state.books[index].volumeInfo.imageUrl == null
+                          // لو الكتاب مالوش صورة نعرض placeholder بدل ما يعمل crash
+                          ? Container(
+                              width: 80,
+                              height: 122,
+                              color: Colors.grey.withValues(alpha: .3),
+                              child: Icon(
+                                Icons.menu_book_rounded,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            )
+                          : CachedNetworkImage(
+                              imageUrl:
+                                  state.books[index].volumeInfo.imageUrl!,
+                              width: 80,
+                              height: 122,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                            ),
                     ),
                   ),
                 ),

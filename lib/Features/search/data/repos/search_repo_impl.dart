@@ -1,5 +1,6 @@
 import 'package:bookly/Core/errors/failure.dart';
 import 'package:bookly/Core/utils/api_service.dart';
+import 'package:bookly/Core/utils/app_constants.dart';
 import 'package:bookly/Features/home/data/models/book_model/book_model.dart';
 import 'package:bookly/Features/search/data/repos/search_repo.dart';
 import 'package:dartz/dartz.dart';
@@ -15,14 +16,13 @@ class SearchRepoImpl implements SearchRepo {
   ) async {
     try {
       var result = await apiService.get(
-        endpoint:
-            'volumes?q=$category&key=AIzaSyBp6fM4i8456OeDg4Uai8piFwafT-3Zv5M',
+        endpoint: 'volumes?q=$category&key=${AppConstants.googleBooksApiKey}',
       );
 
-      List<BookModel> books = [];
-      for (var item in result["items"]) {
-        books.add(BookModel.fromJson(item));
-      }
+      // items ممكن ميكونش موجود خالص لو البحث مفيهوش نتايج، فبنتعامل معاه كـ list فاضية
+      List<BookModel> books = (result['items'] as List? ?? [])
+          .map((item) => BookModel.fromJson(item))
+          .toList();
       return right(books);
     } catch (e) {
       if (e is DioException) return left(ServerFailure.fromDioError(e));

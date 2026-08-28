@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ListViewItem extends StatelessWidget {
   const ListViewItem({super.key, required this.image});
-  final String image;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +12,20 @@ class ListViewItem extends StatelessWidget {
       padding: const EdgeInsets.only(right: 12, bottom: 12),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: CachedNetworkImage(
-          imageUrl: image,
+        child: (image == null || image!.isEmpty)
+            // لو الكتاب مالوش صورة نعرض placeholder بدل ما يعمل crash
+            ? Container(
+                width: MediaQuery.of(context).size.width * .38,
+                height: MediaQuery.of(context).size.height * .26,
+                color: Colors.grey.withValues(alpha: .3),
+                child: Icon(
+                  Icons.menu_book_rounded,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              )
+            : CachedNetworkImage(
+          imageUrl: image!,
           fit: BoxFit.cover,
           width: MediaQuery.of(context).size.width * .38,  //  هنخليه بيتغير هو الارتفاع علشان لو استخدمناه في مكان تاني بس نخليخيه قيمته الافتراضيه هي دي 
           height: MediaQuery.of(context).size.height * .26,

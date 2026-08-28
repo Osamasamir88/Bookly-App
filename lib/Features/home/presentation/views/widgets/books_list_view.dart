@@ -25,7 +25,7 @@ class BooksListview extends StatelessWidget {
                   extra: state.books[index],
                 ),
                 child: ListViewItem(
-                  image: state.books[index].volumeInfo.imageLinks!.thumbnail,
+                  image: state.books[index].volumeInfo.imageUrl,
                 ),
               ),
             ),

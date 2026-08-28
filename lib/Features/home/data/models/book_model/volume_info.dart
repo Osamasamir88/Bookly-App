@@ -30,6 +30,9 @@ class VolumeInfo extends Equatable {
   final String? infoLink;
   final String? canonicalVolumeLink;
 
+  // رابط صورة الكتاب بشكل آمن (بدون force unwrap) لتفادي الـ crash لو الكتاب من غير صورة
+  String? get imageUrl => imageLinks?.thumbnail;
+
   // 1. حساب التقييم مرة واحدة لكل الكتاب
   late final double customRating =
       averageRating?.toDouble() ?? (3 + Random().nextDouble() * 2);

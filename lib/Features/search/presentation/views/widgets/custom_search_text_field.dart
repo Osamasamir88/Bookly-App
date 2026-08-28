@@ -15,8 +15,8 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
 
   @override
   void dispose() {
-    super.dispose();
     searchController.dispose(); // حماية الميموري
+    super.dispose();
   }
 
   @override

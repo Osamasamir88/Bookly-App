@@ -22,16 +22,26 @@ class BookListViewItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               child: AspectRatio(
                 aspectRatio: 2.6/4,
-                child: CachedNetworkImage(
-                  imageUrl: book.volumeInfo.imageLinks!.thumbnail,
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Container(
-                    color: Colors.grey,
-                    child: Icon(Icons.error_outline, color: Colors.white),
-                  ),
-                  fit: BoxFit.fill,
-                ),
+                child: book.volumeInfo.imageUrl == null
+                    // لو الكتاب مالوش صورة نعرض placeholder بدل ما يعمل crash
+                    ? Container(
+                        color: Colors.grey.withValues(alpha: .3),
+                        child: Icon(
+                          Icons.menu_book_rounded,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: book.volumeInfo.imageUrl!,
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Container(
+                          color: Colors.grey,
+                          child: Icon(Icons.error_outline, color: Colors.white),
+                        ),
+                        fit: BoxFit.fill,
+                      ),
               ),
             ),
              // book image

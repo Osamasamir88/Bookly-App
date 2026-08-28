@@ -1,5 +1,6 @@
 import 'package:bookly/Core/errors/failure.dart';
 import 'package:bookly/Core/utils/api_service.dart';
+import 'package:bookly/Core/utils/app_constants.dart';
 import 'package:bookly/Features/home/data/models/book_model/book_model.dart';
 import 'package:bookly/Features/home/data/models/book_model/repos/home_repo.dart';
 import 'package:dartz/dartz.dart';
@@ -13,14 +14,13 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<Failure, List<BookModel>>> featchFeaturedBooks() async {
     try {
       var data = await apiService.get(
-        endpoint:
-            'volumes?q=flutter&key=AIzaSyBp6fM4i8456OeDg4Uai8piFwafT-3Zv5M',
+        endpoint: 'volumes?q=flutter&key=${AppConstants.googleBooksApiKey}',
       );
 
-      List<BookModel> books = [];
-      for (var item in data["items"]) {
-        books.add(BookModel.fromJson(item));
-      }
+      // items ممكن ميكونش موجود خالص لو مفيش نتايج، فبنتعامل معاه كـ list فاضية
+      List<BookModel> books = (data['items'] as List? ?? [])
+          .map((item) => BookModel.fromJson(item))
+          .toList();
 
       return right(books);
     } catch (e) {
@@ -36,13 +36,13 @@ class HomeRepoImpl implements HomeRepo {
     try {
       var data = await apiService.get(
         endpoint:
-            'volumes?filter=free-ebooks&q=flutter&key=AIzaSyBp6fM4i8456OeDg4Uai8piFwafT-3Zv5M&Sorting=newest',
+            'volumes?filter=free-ebooks&q=flutter&key=${AppConstants.googleBooksApiKey}&orderBy=newest',
       );
 
-      List<BookModel> books = [];
-      for (var item in data['items']) {
-        books.add(BookModel.fromJson(item));
-      }
+      // items ممكن ميكونش موجود خالص لو مفيش نتايج، فبنتعامل معاه كـ list فاضية
+      List<BookModel> books = (data['items'] as List? ?? [])
+          .map((item) => BookModel.fromJson(item))
+          .toList();
 
       return right(books);
     } catch (e) {
@@ -61,12 +61,12 @@ class HomeRepoImpl implements HomeRepo {
     try {
       var data = await apiService.get(
         endpoint:
-            'volumes?Filtering=free-ebooks&q=$category&Sorting=relevance&key=AIzaSyBp6fM4i8456OeDg4Uai8piFwafT-3Zv5M',
+            'volumes?filter=free-ebooks&q=$category&orderBy=relevance&key=${AppConstants.googleBooksApiKey}',
       );
-      List<BookModel> books = [];
-      for (var book in data['items']) {
-        books.add(BookModel.fromJson(book));
-      }
+      // items ممكن ميكونش موجود خالص لو مفيش نتايج، فبنتعامل معاه كـ list فاضية
+      List<BookModel> books = (data['items'] as List? ?? [])
+          .map((item) => BookModel.fromJson(item))
+          .toList();
       return right(books);
     } catch (e) {
       if (e is DioException) {

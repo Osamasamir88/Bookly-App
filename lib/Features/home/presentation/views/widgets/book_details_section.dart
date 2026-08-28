@@ -15,12 +15,24 @@ class BookDetailsSection extends StatelessWidget {
         // book image
         ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          child: CachedNetworkImage(
-            imageUrl: book.volumeInfo.imageLinks!.thumbnail,
-            fit: BoxFit.fill,
-            width: MediaQuery.of(context).size.width * 0.5,
-            height: MediaQuery.of(context).size.height * 0.3,
-          ),
+          child: book.volumeInfo.imageUrl == null
+              // لو الكتاب مالوش صورة نعرض placeholder بدل ما يعمل crash
+              ? Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  color: Colors.grey.withValues(alpha: .3),
+                  child: Icon(
+                    Icons.menu_book_rounded,
+                    color: Colors.white,
+                    size: 60,
+                  ),
+                )
+              : CachedNetworkImage(
+                  imageUrl: book.volumeInfo.imageUrl!,
+                  fit: BoxFit.fill,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                ),
         ),
 
         SizedBox(height: 46),

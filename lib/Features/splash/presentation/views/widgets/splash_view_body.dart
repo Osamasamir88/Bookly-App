@@ -26,8 +26,8 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
   @override
   void dispose() {
-    super.dispose();
     animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,7 +66,10 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
   void navigateToHome() {
     Future.delayed(Duration(seconds: 3), () {
-      context.go(AppRoutes.homeView);
+      // نتأكد إن الـ widget لسه موجود في الشجرة قبل ما نستخدم الـ context
+      if (mounted) {
+        context.go(AppRoutes.homeView);
+      }
     });
   }
 }
